@@ -1,3 +1,0 @@
-## gitlecture
-
-- 練習
