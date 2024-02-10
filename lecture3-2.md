@@ -1,23 +1,23 @@
 #第3回課題報告
 
 -サンプルアプリケーションのデプロイ
-![サンプルアプリケーションのデプロイ.png](C:\Users\exile\Pictures\Screenshots\サンプルアプリケーションのデプロイ.png)
+![サンプルアプリケーションのデプロイ.png](img/サンプルアプリケーションのデプロイ.png)
 
 -APサーバーについて（名前とバージョン）
-![APサーバーと名前とバージョン.png](C:\Users\exile\Pictures\Screenshots\APサーバーの名前とver.png)
+![APサーバーと名前とバージョン.png](img/APサーバーの名前とver.png)
 
 -APサーバーについて（APサーバー終了時のアクセス状況）
-![アクセス.png](C:\Users\exile\Pictures\Screenshots\アクセス.png)
+![アクセス.png](img/アクセス.png)
 
 -DBサーバーについて（DBサーバーの名前とCloud9でのバージョン）
-![mysql名称.png](C:\Users\exile\Pictures\Screenshots\mysql名称.png)
-![version.png](C:\Users\exile\Pictures\Screenshots\version.png)
+![mysql名称.png](img/名称.png)
+![version.png](img/version.png)
 
 -DBサーバーについて（DBサーバー終了時のアクセス状況）
-![DBアクセス.png](C:\Users\exile\Pictures\Screenshots\DBアクセス.png)
+![DBアクセス.png](img/DBアクセス.png)
 
 -DBサーバーについて（Railsの構成管理ツールの名称）
-![bundler.png](C:\Users\exile\Pictures\Screenshots\bundler.png)
+![bundler.png](img/bundler.png)
 
 #今回の課題から学んだこと
 -まずmySQLを停止させようと「sudo service mysql stop」を入力したところ停止されなかったが、「sudo service mysqld stop」を入力すると停止した。なぜmysqlのあとにｄをつけると反映
