@@ -10,7 +10,7 @@
 ![アクセス.png](images/アクセス.png)
 
 -DBサーバーについて（DBサーバーの名前とCloud9でのバージョン）
-![mysql名称.png](images/musql名称.png)
+![mysql名称.png](images/mysql名称.png)
 ![version.png](images/version.png)
 
 -DBサーバーについて（DBサーバー終了時のアクセス状況）
