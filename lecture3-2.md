@@ -20,6 +20,6 @@
 ![bundler.png](images/bundler.png)
 
 # 今回の課題から学んだこと
--まずmySQLを停止させようと「sudo service mysql stop」を入力したところ停止されなかったが、「sudo service mysqld stop」を入力すると停止した。なぜmysqlのあとにｄをつけると反映
+- まずmySQLを停止させようと「sudo service mysql stop」を入力したところ停止されなかったが、「sudo service mysqld stop」を入力すると停止した。なぜmysqlのあとにｄをつけると反映
 されるんだろうと疑問に思った。
--未だにＡＰサーバーやＤＢサーバーの仕組みについて理解していないので、動画を見返したりyoutubeなどで調べたりしようと思った。
+- 未だにＡＰサーバーやＤＢサーバーの仕組みについて理解していないので、動画を見返したりyoutubeなどで調べたりしようと思った。
