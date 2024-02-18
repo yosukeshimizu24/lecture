@@ -4,8 +4,8 @@
 ![VPC作成.png](lecture4/VPC作成.png)
 
 - EC2構築
-![EC2作成.png](lecture4/EC2作成)
-![EC2セキュリティ.png](lecture4/EC2セキュリティ)
+![EC2作成.png](lecture4/EC2作成.png)
+![EC2セキュリティ.png](lecture4/EC2セキュリティ.png)
 
 - RDS構築
 ![RDS構築.png](lecture4/RDS構築.png)
