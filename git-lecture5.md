@@ -1,7 +1,7 @@
 # lecture5課題
 
 - 組み込みサーバーのみの動作確認
-![組み込みサーバーのみのbin/dev.png](lecture5/組み込みサーバーのみのbin/dev.png)
+![組み込みサーバーのみのbindev.png](lecture5/組み込みサーバーのみのbindev.png)
 ![組み込みサーバーでの動作確認.png](lecture5/組み込みサーバーでの動作確認.png)
 
 - unicornでの動作確認
@@ -12,4 +12,4 @@
 ![Nginx動作確認.png](lecture5/Nginx動作確認.png)
 
 - Nginxとunicornを使用しての動作確認
-![Nginx・unicornをあわせての動作確認.png](lecture5/Nginx・unicornをあわせての動作確認.png)
+![Ngunx・unicornをあわせての動作確認.png](lecture5/Ngunx・unicornをあわせての動作確認.png)
