@@ -12,4 +12,4 @@
 ![Nginx動作確認.png](lecture5/Nginx動作確認.png)
 
 - Nginxとunicornを使用しての動作確認
-![Ngunx・unicornをあわせての動作確認.png](lecture5/Ngunx・unicornをあわせての動作確認.png)
+![Ngunx・unicornを合わせての動作確認.png](lecture5/Ngunx・unicornを合わせての動作確認.png)
