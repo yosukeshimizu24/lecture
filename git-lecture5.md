@@ -12,63 +12,78 @@
 
 # EC2上にサンプルアプリケーションをデプロイして動作確認
 - プラグインの導入
-`$sudo yum install git make gcc-c++ patch openssl-devel libyaml-devel libffi-devel libicu-devel libxml2 libxslt libxml2-devel libxslt-devel zlib-devel readline-devel ImageMagick ImageMagick-devel epel-release`
-
+```
+$sudo yum install git make gcc-c++ patch openssl-devel libyaml-devel libffi-devel libicu-devel libxml2 libxslt libxml2-devel libxslt-devel zlib-devel readline-devel ImageMagick ImageMagick-devel epel-release
+```
 - rbenvをインストール
- `$git clone https://github.com/sstephenson/rbenv.git ~/.rbenv`
- `$ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile`
- `$ echo 'eval "$(rbenv init -)"' >> ~/.bash_profile`
- `$ source ~/.bash_profile`
-
+```
+$git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+$ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+$ echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+$ source ~/.bash_profile
+```
 - ruby-buildをインストール
- `$ git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build`
- `$ rbenv rehash`
-
+```
+$ git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+$ rbenv rehash
+```
 - rubyをインストール
- `$ rbenv install -v 3.1.2`
- `$ rbenv global 3.1.2`
- `$ rbenv rehash`
- `$ ruby -v`
-
+```
+$ rbenv install -v 3.1.2
+$ rbenv global 3.1.2
+$ rbenv rehash
+$ ruby -v
+```
 - railsインストール
- `gem install rails -v 7.0.4`
-
+```
+gem install rails -v 7.0.4
+```
 - bundlerインストール
- `gem install bundler -v 2.3.14`
-
+```
+gem install bundler -v 2.3.14
+```
 - node.jpインストール
- `$curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash`
- `$command -v nvm`
- `$source ~/.bash_profile`
- `$command -v nvm`
- `$nvm install v17.9.1`
-
+```
+$curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+$command -v nvm
+$source ~/.bash_profile
+$command -v nvm
+$nvm install v17.9.1
+```
 - yarn インストール
- `$npm install -g yarn`
+```
+$ npm install -g yarn
+```
  バージョンの切り替えたい場合は
- `$yarn set version [バージョンを指定]``
-
+```
+$yarn set version [バージョンを指定]
+```
 - サンプルアプリケーションをクローン・ディレクトリに移動
- `$ git clone https://github.com/yuta-ushijima/raisetech-live8-sample-app.git`
- `$ cd raisetech-live8-sample-app`
-
+```
+$ git clone https://github.com/yuta-ushijima/raisetech-live8-sample-app.git
+$ cd raisetech-live8-sample-app
+```
 - mysqlインストール
- `$ sudo yum remove -y mariadb-*``
- `$ sudo yum install -y --enablerepo=mysql80-community mysql-community-server`
- `$ yum list installed | grep mysql`
- `$ sudo yum install -y --enablerepo=mysql80-community mysql-community-devel`
- `$ systemctl status mysqld.service`
-
+```
+$ sudo yum remove -y mariadb-*
+$ sudo yum install -y --enablerepo=mysql80-community mysql-community-server
+$ yum list installed | grep mysql
+$ sudo yum install -y --enablerepo=mysql80-community mysql-community-devel
+$ systemctl status mysqld.service
+```
 - mysql2インストール
- `$ gem install mysql2`
- `$ sudo yum install mysql-devel`
- `$ which mysql`
- `$ which my conf`
- `$ ls /etc/``
- `$ cat /etc/my.cnf`
-
+```
+$ gem install mysql2
+$ sudo yum install mysql-devel
+$ which mysql
+$ which my conf
+$ ls /etc/
+$ cat /etc/my.cnf
+```
 - database.ymlを編集
- `$ vim config/database.yml`
+```
+$ vim config/database.yml
+```
 下記を入力
 ```
  default: &default
@@ -83,22 +98,27 @@
  ```
 
 - 組み込みサーバーのみの動作確認
- `$ bin/setup`
- `$bin/dev`
- EC2のインスタンスにポート3000を追加
- `http://IPアドレス:3000/`で動作確認
+```
+$ bin/setup
+$bin/dev
+```
+- EC2のインスタンスにポート3000を追加
+http://IPアドレス:3000/で動作確認
 ![組み込みサーバーのみのbindev.png](lecture5/組み込みサーバーのみのbindev.png)
 ![組み込みサーバーでの動作確認.png](lecture5/組み込みサーバーでの動作確認.png)
 
 
 # unicornでの動作確認
 - unicornインストール
- vi Gemfileにunicornを追記
- `$bundle install`
-
+vi Gemfileにunicornを追記
+```
+$ bundle install
+```
 - unicorn設定
- `$vi config/unicorn.rb`
- listenとpidが
+```
+$vi config/unicorn.rb
+```
+listenとpidが
 ```
 「/home/{ユーザ名}/{Railsアプリケーション名}/tmp/unicorn.sock」
 「/home/{ユーザ名}/{Railsアプリケーション名}/tmp/unicorn.pid」
@@ -106,10 +126,12 @@
 ```
 
 - Unicorn の起動・停止スクリプトを作成する
- ファイルを生成
- `$ rails g task unicorn`
- `$vi lib/tasks/unicorn.rake`
-　下記を入力
+ファイルを生成
+```
+$ rails g task unicorn
+$ vi lib/tasks/unicorn.rake
+```
+下記を入力
 ```
 namespace :unicorn do
   # Tasks
@@ -160,36 +182,46 @@ namespace :unicorn do
 end
 ```
 
- def unicorn_pid の File.read の引数のパスは /home/{ユーザ名}/{Railsアプリケーション名}/tmp/unicorn.pidにする。
+def unicorn_pid の File.read の引数のパスは /home/{ユーザ名}/{Railsアプリケーション名}/tmp/unicorn.pidにする。
 
 
 - unicorn起動
- `$ rake unicorn:start`
- Unicorn が起動しているかどうかを確認するには以下のコマンドを実行
- `$ ps -ef | grep unicorn | grep -v grep`
- Unicorn を停止するには以下のコマンドを実行
- `$ rake unicorn:stop`
+```
+$ rake unicorn:start
+```
+Unicorn が起動しているかどうかを確認するには以下のコマンドを実行
+```
+$ ps -ef | grep unicorn | grep -v grep
+```
+Unicorn を停止するには以下のコマンドを実行
+```
+$ rake unicorn:stop
+```
 ![unicorn起動確認.png](lecture5/unicorn起動確認.png)
 ![unicornを使って動作確認.png](lecture5/unicornを使って動作確認.png)
 
 # Nginx動作確認
 - Nginxインストールして起動
- `$sudo amazon-linux-extras enable nginx1`
- `$sudo yum -y install nginx`
- `$ nginx -v`
- `$sudo systemctl start nginx.service`
- `$sudo systemctl status nginx.service`
-
+```
+$sudo amazon-linux-extras enable nginx1
+$sudo yum -y install nginx
+$ nginx -v
+$sudo systemctl start nginx.service
+$sudo systemctl status nginx.service
+```
 - Nginx動作確認
 ![Nginx動作確認.png](lecture5/Nginx動作確認.png)
 
 # nginxとunicornを連携して動作確認
 - Nginxを停止
- `$sudo systemctl stop nginx`
-
+```
+$sudo systemctl stop nginx
+```
 - Nginxの設定ファイルを作成し編集
- `$sudo vi /etc/nginx/conf.d/raisetech-live8-sample-app.conf`　
- 下記を作成したファイルに入力
+```
+$ sudo vi /etc/nginx/conf.d/raisetech-live8-sample-app.conf
+```
+下記を作成したファイルに入力
 ```
 upstream unicorn {
   server unix:/home/ec2-user/raisetech-live8-sample-app/unicorn.sock;
@@ -219,12 +251,17 @@ server {
  ```
 
 - Nginxを起動
- `$ sudo systemctl start nginx`
- Nginxが起動しているかどうか確認
- `$ systemctl status nginx`
-
+```
+$ sudo systemctl start nginx
+```
+Nginxが起動しているかどうか確認
+```
+$ systemctl status nginx
+```
 
 - Nginxとunicornを使用しての動作確認
- アクセス
- `http://[ドメイン名]/`
+アクセス
+```
+http://[ドメイン名]/
+```
 ]![Ngunx・unicornを合わせての動作確認.png](lecture5/Ngunx・unicornを合わせての動作確認.png)
