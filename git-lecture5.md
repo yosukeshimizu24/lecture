@@ -12,7 +12,7 @@
 
 # EC2上にサンプルアプリケーションをデプロイして動作確認
 - プラグインの導入
- `$sudo yum install git make gcc-c++ patch openssl-devel libyaml-devel libffi-devel libicu-devel libxml2 libxslt libxml2-devel libxslt-devel zlib-devel readline-devel ImageMagick ImageMagick-devel epel-release`
+`$sudo yum install git make gcc-c++ patch openssl-devel libyaml-devel libffi-devel libicu-devel libxml2 libxslt libxml2-devel libxslt-devel zlib-devel readline-devel ImageMagick ImageMagick-devel epel-release`
 
 - rbenvをインストール
  `$git clone https://github.com/sstephenson/rbenv.git ~/.rbenv`
