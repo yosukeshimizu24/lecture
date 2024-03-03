@@ -109,8 +109,7 @@ http://IPアドレス:3000/で動作確認
 
 
 # unicornでの動作確認
-- unicornインストール
-vi Gemfileにunicornを追記
+- unicornインストール。vi Gemfileにunicornを追記してから
 ```
 $ bundle install
 ```
@@ -122,8 +121,8 @@ listenとpidが
 ```
 「/home/{ユーザ名}/{Railsアプリケーション名}/tmp/unicorn.sock」
 「/home/{ユーザ名}/{Railsアプリケーション名}/tmp/unicorn.pid」
- になっていることを確認。
 ```
+ になっていることを確認。
 
 - Unicorn の起動・停止スクリプトを作成する
 ファイルを生成
