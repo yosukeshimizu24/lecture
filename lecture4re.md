@@ -104,6 +104,6 @@
 ## **感想**
 - 今回は第5回で躓いたため、もう一度第4回から始めてみることにした。
 - 今回から、Cloud9を使わずプルリクエストをしてみた（git bash使用）。マークダウンに画像を表示させる方法にてこずりました。
-- githubのCode→Add file→Uplode files→自分で作成したlecture4re.pngのファイルをドラッグ＆ドロップしてファイルを追加した。
+- githubのCode→Add file→Uplode files→自分で作成したlecture4re.pngのファイルをドラッグ＆ドロップしてファイルを追加した→ `git pull origin lecture4re lecture4re`をして差分をなくす
 この方法があっているかわかりませんが、この方法で画像を表示させることができた。
 - まだ、画像を表示させる原理を理解できていない。
