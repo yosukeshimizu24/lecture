@@ -71,7 +71,7 @@
 ![RDSセキュリティ.png](lecture4re.png/RDSセキュリティ.png)
 
 ## **RDS接続**
-![RDS接続(2).png](RDS接続(2)png)
+![RDS接続(2).png](RDS接続(2).png)
 - 手順
 1. EC2を接続してMySQLをインストールする
  - sshを使用してEC2に接続する
