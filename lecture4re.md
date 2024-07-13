@@ -71,33 +71,15 @@
 ![RDSセキュリティ.png](lecture4re.png/RDSセキュリティ.png)
 
 ## **RDS接続**
-![RDS接続.png](lecture4re.png/RDS接続.png)
+![RDS接続(2).png](RDS接続(2)png)
 - 手順
 1. EC2を接続してMySQLをインストールする
  - sshを使用してEC2に接続する
- - yumを最新状態にする
-  `sudo yum update -y`
- - インスタンス作成初期からインストールされているMariaDB用パッケージを削除する
-  `sudo yum remove -y mariadb-*`
- - MySQLのリポジトリをyumに追加する
-  `sudo yum localinstall -y https://dev.mysql.com/get/~~~~~~~~~~~~`
-  `https://dev.mysql.com/downloads/repo/yum/`を開き「Red Hat Enterprise Linux 7 / Oracle Linux 7」の欄の下に記載されているリポジトリ名を下記コマンドのURLを上記のhttps://dev.mysql.com/get/以降に入力する
- - MySQLに必要なパッケージ(mysql-community-server)を取得する
-  `sudo yum install -y --enablerepo=mysql80-community mysql-community-server`
- - MySQLに必要なパッケージ(mysql-community-devel)を取得する
-  `sudo yum install -y --enablerepo=mysql80-community mysql-community-devel`
- - インストールされたMySQLに関係のあるパッケージを出力する
-  `yum list installed | grep mysql`
- - logファイルを作成する
-  `sudo touch /var/log/mysqld.log`
- - mysqldを起動する
-  `sudo systemctl start mysqld `
- - musqldの状態を確認する
-  `systemctl status mysqld.service`
-  active(running)になっていればOK
+ - MySQLコマンドをインストールする
+  `sudo yum -y install mysql`
 2. EC2からRDSに接続する
  - 下記を入力し、RDSに接続する
-  `mysql -u RDS作成時に作成したマスターユーザー名 -p -h RDSのエンドポイント`
+  `mysql -h [エンドポイント] -P 3306 -u admin -p`
  - 入力したらマスターパスワードを求められる。RDS作成時に作成したマスターパスワードを入力する
  - 上記のスクリーンショットのように出力されればOK
 
