@@ -6,7 +6,8 @@
 1. 組み込みサーバー、unix socket、nginxを使った動作確認
 1. ALB追加したうえでの動作確認
 1. S3を追加して動作確認
-
+1. 構成図
+1. 感想
 
 # ①組み込みサーバーのみでの動作確認
 
@@ -134,6 +135,7 @@ error Command failed with exit code 127.と表示されたため
 `http://EC2のパブリック IPv4 アドレス:3000`  
 動作しなかったら、EC2のインバウンド・アウトバウンド確認
 
+![組み込みサーバーのみ動作確認.png](lecture5re/組み込みサーバーのみ動作確認.png)
 
 - 画像を表示させる  
 image magick インストール
@@ -172,6 +174,8 @@ rails db:migrate
 curl --unix-socket /home/ec2-user/raisetech-live8-sample-app/tmp/sockets/puma.sock http://localhost/
 curl --unix-socket /home/ec2-user/raisetech-live8-sample-app/tmp/sockets/puma.sock http://EC2のパブリック IPv4 アドレス/
 ```
+![組み込みサーバー・Unixソケット動作確認1.png](lecture5re/組み込みサーバー・Unixソケット動作確認1.png)
+![組み込みサーバー・Unixソケット動作確認2.png](lecture5re/組み込みサーバー・Unixソケット動作確認2.png)
 
 # ③nginx単体の動作確認
 - nginx インストー
@@ -187,6 +191,8 @@ curl --unix-socket /home/ec2-user/raisetech-live8-sample-app/tmp/sockets/puma.so
 
 - nginx動作確認
 `http://EC2パブリック IPv4 アドレス`
+
+![Nginx単体動作確認.png](lecture5re/Nginx単体動作確認.png)
 
 # ④組み込みサーバー、unix socket、nginxを使った動作確認
 - nginx起動停止
@@ -252,6 +258,7 @@ sudo systemctl daemon-reload
 - 動作確認
 `http://EC2パブリックIPv4アドレス`
 
+![組み込みサーバー・Unixソケット・Nginx動作確認.png](lecture5re/組み込みサーバー・Unixソケット・Nginx動作確認.png)
 
 # ⑤ALB追加したうえでの動作確認
 - ターゲットグループ作成
@@ -338,6 +345,7 @@ server_nameを`raisetech-alb-206070586.ap-northeast-1.elb.amazonaws.com`に変�
 
 - ALBのDNSをブラウザにコピペして動作確認
 
+![]()
 
 # ⑥S3を追加して動作確認
 - S3作成  
@@ -361,8 +369,12 @@ bucket: raisetech-mys3
 
 - s3に画像が保存されているか確認
 
-# 構成図
+![S3追加動作確認1.png](lecture5re/S3追加動作確認1.png)
 
+![S3追加動作確認2.png](lecture5re/S3追加動作確認2.png)
+
+# 構成図
+![構成図.png](lecture5re/構成図.png)
 
 # 感想
 - この課題ができるまで、紆余曲折の連続だった。ぶっちゃけすごくしんどかった。  
