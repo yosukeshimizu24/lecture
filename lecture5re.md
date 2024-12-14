@@ -10,32 +10,24 @@
 
 # ①組み込みサーバーのみでの動作確認
 
-sshでec2に接続する
+- gitのインストール<br>`sudo yum install git`
 
-`sudo yum update`
 
-- gitのインストール
-`sudo yum install git
+- gitのバージョン確認<br>`git version`
 
-- gitのバージョン確認
-`git version`
 
-- サンプルアプリケーションをクローン
-`git clone https://github.com/yuta-ushijima/raisetech-live8-sample-app.git`   
+- サンプルアプリケーションをクローン<br>`git clone https://github.com/yuta-ushijima/raisetech-live8-sample-app.git`   
 
-client_loopしないように設定
-`sudo vim /etc/ssh/sshd_config`
-最終行に下記を追記する
-`ClientAliveInterval 300`
-sshdの再読み込み
-`sudo systemctl reload sshd.service`
+client_loopしないように設定<br><S-Del>`sudo vim /etc/ssh/sshd_config`
 
-- rubyインストール
-railsの起動に必要なパッケージをインストール
-`sudo yum install -y gcc-c++ glibc-headers openssl-devel readline libyaml-devel readline-devel zlib zlib-devel libffi-devel libxml2 libxslt libxml2-devel libxslt-devel sqlite-devel`
+最終行に下記を追記する<br>`ClientAliveInterval 300`
 
-rbenvのインストール
-`git clone https://github.com/sstephenson/rbenv.git ~/.rbenv`
+sshdの再読み込み<br>`sudo systemctl reload sshd.service`
+
+
+- rubyインストール<br>railsの起動に必要なパッケージをインストール<br>`sudo yum install -y gcc-c++ glibc-headers openssl-devel readline libyaml-devel readline-devel zlib zlib-devel libffi-devel libxml2 libxslt libxml2-devel libxslt-devel sqlite-devel`
+
+rbenvのインストール<br>`git clone https://github.com/sstephenson/rbenv.git ~/.rbenv`  
 上記でだけでは、コマンド実行できないのでPATHを設定
 ```
 echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
@@ -43,25 +35,28 @@ echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
-ruby-buildのインストール
-`git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build`
-コマンドを使えるようにする
+ruby-buildのインストール<br>`git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build`  
+コマンドを使えるようにする  
 `rbenv rehash`
 
-rubyインストール
-`rbenv install -v 3.2.3`
-使用するRubyのバージョンを指定
+rubyインストール  
+`rbenv install -v 3.2.3`  
+使用するRubyのバージョンを指定    
 `rbenv global 3.2.3`
 
-- bundlerインストール
+
+- bundlerインストール  
 `gem install bundler -v 2.3.14`
 
-- Node.jsが必要なのでnvmをインストール
-`git clone https://github.com/creationix/nvm.git ~/.nvm`
-source ~/.nvm/nvm.sh`
 
-次回から起動時に読み込まれるように .bash_profile を編集
-`vi .bash_profile`
+- Node.jsが必要なのでnvmをインストール  
+```
+git clone https://github.com/creationix/nvm.git ~/.nvm
+source ~/.nvm/nvm.sh`
+```
+
+次回から起動時に読み込まれるように .bash_profile を編集  
+`vi .bash_profile`  
 以下を記述
 ```
 if [ -f ~/.nvm/nvm.sh ]; then
@@ -69,25 +64,28 @@ if [ -f ~/.nvm/nvm.sh ]; then
 fi
 ```
 
-- node インストール
+
+- node インストール  
 `nvm install v17.9.1`
 
-- yarnインストール
-`npm install --global yarn`
-yarnバージョン変更
+
+- yarnインストール  
+`npm install --global yarn`  
+yarnバージョン変更  
 `yarn set version 1.22.19`
 
-- MySQLインストール
-下記コマンドを実行してインスタンス作成初期からインストールされているMariaDB用パッケージを削除
-`sudo yum remove -y mariadb-*`
-下記コマンドを実行してMySQLのリポジトリをyumに追加
-`sudo yum localinstall -y https://dev.mysql.com/get/「Red Hat Enterprise Linux 7 / Oracle Linux 7」の欄の下に記載されているリポジトリ名`
-下記コマンドを実行してMySQLに必要なパッケージ(mysql-community-server)を取得
-`sudo yum install -y --enablerepo=mysql80-community mysql-community-server`
-下記コマンドを実行してMySQLに必要なパッケージ(mysql-community-devel)を取得
-`sudo yum install -y --enablerepo=mysql80-community mysql-community-devel`
-下記コマンドを実行してインストールされたMySQLに関係のあるパッケージを出力
-`yum list installed | grep mysql`
+
+- MySQLインストール  
+下記コマンドを実行してインスタンス作成初期からインストールされているMariaDB用パッケージを削除  
+`sudo yum remove -y mariadb-*`  
+下記コマンドを実行してMySQLのリポジトリをyumに追加  
+`sudo yum localinstall -y https://dev.mysql.com/get/「Red Hat Enterprise Linux 7 / Oracle Linux 7」の欄の下に記載されているリポジトリ名`  
+下記コマンドを実行してMySQLに必要なパッケージ(mysql-community-server)を取得  
+`sudo yum install -y --enablerepo=mysql80-community mysql-community-server`  
+下記コマンドを実行してMySQLに必要なパッケージ(mysql-community-devel)を取得  
+`sudo yum install -y --enablerepo=mysql80-community mysql-community-devel`  
+下記コマンドを実行してインストールされたMySQLに関係のあるパッケージを出力  
+`yum list installed | grep mysql`  
 下記のように表示されたらOK
 ```
 mysql-community-client.x86_64         8.0.28-1.el7                   @mysql80-community
@@ -99,20 +97,20 @@ mysql-community-libs.x86_64           8.0.28-1.el7                   @mysql80-co
 mysql-community-server.x86_64         8.0.28-1.el7                   @mysql80-community
 mysql80-community-release.noarch      el7-5                          installed
 ```
-下記コマンドを実行してlogファイルを作成
-`sudo touch /var/log/mysqld.log`
-下記コマンドを実行してmysqldを起動
-`sudo systemctl start mysqld`
-下記コマンドを実行してmusqldの状態を確認
-`systemctl status mysqld.service`
-下記コマンドを実行してmysqldがインスタンスの起動と同時に起動するように設定
-`sudo systemctl enable mysqld`
+下記コマンドを実行してlogファイルを作成  
+`sudo touch /var/log/mysqld.log`  
+下記コマンドを実行してmysqldを起動  
+`sudo systemctl start mysqld`  
+下記コマンドを実行してmusqldの状態を確認  
+`systemctl status mysqld.service`  
+下記コマンドを実行してmysqldがインスタンスの起動と同時に起動するように設定  
+`sudo systemctl enable mysqld`  
 
 
-- MySQLの設定
-config/database.ymlを作成
-`cp config/database.yml.sample config/database.yml`
-config/database.ymlを編集
+- MySQLの設定  
+config/database.ymlを作成  
+`cp config/database.yml.sample config/database.yml`  
+config/database.ymlを編集  
 `vi config/database.yml`
 ```
 username: "認証情報のユーザ名"
@@ -121,26 +119,29 @@ host: "RDSのエンドポイント"
 ```
 を入力
 
-- 環境構築
+
+- 環境構築  
 `bin/setup`
 
-組み込みサーバーの起動
+組み込みサーバーの起動  
 `bin/dev`
 
-error Command failed with exit code 127.と表示されたため
+error Command failed with exit code 127.と表示されたため  
 `yarn install`
 
-- 動作確認
-`http://EC2のパブリック IPv4 アドレス:3000`
+
+- 動作確認  
+`http://EC2のパブリック IPv4 アドレス:3000`  
 動作しなかったら、EC2のインバウンド・アウトバウンド確認
 
-- 画像を表示させる
+
+- 画像を表示させる  
 image magick インストール
 ```
 sudo yum install ImageMagick
 sudo yum install ImageMagick-devel
 ```
-- Gemfileにmini_magickを追加
+Gemfileにmini_magickを追加  
 ```
 vi Gemfile
 gem 'mini_magick'
@@ -156,13 +157,15 @@ rails db:migrate
 ```
 
 # ②組み込みサーバーとUnixSocketを使った動作確認
-- config/puma.rbを開く
-`vim config/puma.rb`
-- port ENV.fetch("PORT") { 3000 }をコメントアウトする。両端に#をつけるとコメントアウトできる
-`#port ENV.fetch("PORT") { 3000 }#`   
+- config/puma.rbを開く  
+`vim config/puma.rb`  
+- port ENV.fetch("PORT") { 3000 }をコメントアウトする。両端に#をつけるとコメントアウトできる  
+`#port ENV.fetch("PORT") { 3000 }#`
 
-- railsを起動
+
+- railsを起動  
 `rails s`
+
 
 - 新しくターミナルを開いてsshで接続し動作確認をする(どっちでもいい)
 ```
@@ -171,7 +174,7 @@ curl --unix-socket /home/ec2-user/raisetech-live8-sample-app/tmp/sockets/puma.so
 ```
 
 # ③nginx単体の動作確認
-- nginx インストール
+- nginx インストー
 `sudo amazon-linux-extras install nginx1`
 
 - 初期設定ファイルのバックアップを取る
@@ -190,7 +193,7 @@ curl --unix-socket /home/ec2-user/raisetech-live8-sample-app/tmp/sockets/puma.so
 `sudo systemctl stop nginx`
 
 - 新しく設定ファイル作成
-`sudo vi /etc/nginx/conf.d/raisetech-live8-sample-app.conf`
+`sudo vi /etc/nginx/conf.d/raisetech-live8-sample-app.conf`  
 下記を記述
 ```
 upstream puma {
@@ -283,14 +286,10 @@ sudo systemctl daemon-reload
 `IP アドレスタイプ`
 1. VPC　
 `自分が作成したVPCを選択`
-1. マッピング・アベイラビリティーゾーン
-```　
-raisetech-subnet-public1-ap-northeast-1a
-raisetech-subnet-public2-ap-northeast-1c
-```
+1. マッピング・アベイラビリティーゾーン`public`を選択  
 1. セキュリティグループ　
 `作成したalb-securityを選択`
-1. リスナーとルーティング　
+1. リスナーとルーティング
 `http:80 作成したターゲットグループを選択`
 
 
@@ -331,23 +330,22 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 ```
 になることを確認
 
-`vi config/application.rb`
-一番下に
+`vi config/application.rb`を開き、一番下に
 `config.hosts << "raisetech-alb-206070586.ap-northeast-1.elb.amazonaws.com"`を追記
 
-`sudo vi /etc/nginx/conf.d/raisetech-live8-sample-app.conf`
-server_nameをraisetech-alb-206070586.ap-northeast-1.elb.amazonaws.comに変更
+`sudo vi /etc/nginx/conf.d/raisetech-live8-sample-app.conf`を開き  
+server_nameを`raisetech-alb-206070586.ap-northeast-1.elb.amazonaws.com`に変更
 
 - ALBのDNSをブラウザにコピペして動作確認
 
 
 # ⑥S3を追加して動作確認
-- S3作成
-バケットタイプ：汎用
-バケット名：raisetech-mys3
+- S3作成  
+バケットタイプ：汎用  
+バケット名：raisetech-mys3  
 他は何もいじらず作成
 
-IAMロールを作成し、EC2にアタッチする
+IAMロールを作成し、EC2にアタッチする  
 s3Fullaccess
 
 - ファイル設定変更
@@ -362,3 +360,11 @@ bucket: raisetech-mys3
 - ALBのDNSをブラウザにコピペして動作確認
 
 - s3に画像が保存されているか確認
+
+# 構成図
+
+
+# 感想
+- この課題ができるまで、紆余曲折の連続だった。ぶっちゃけすごくしんどかった。  
+- 今回で学んだことは、まず見たことないコマンドやなんだこれ？と思ったことに対して、すぐ調べるという習慣をみいつけた法がいいと感じた。  
+- 噂によれば、第１０回の課題が難しいらしいから少し不安。でも頑張る。
