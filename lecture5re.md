@@ -381,7 +381,7 @@ bucket: raisetech-mys3
 ![S3追加動作確認2.png](lecture5re/S3追加動作確認2.png)
 
 # 構成図
-![構成図2.png](lecture5re2/構成図2.png)
+![構成図3.png](構成図3.png)
 
 # 感想
 - この課題ができるまで、紆余曲折の連続だった。ぶっちゃけすごくしんどかった。  
