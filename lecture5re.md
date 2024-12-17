@@ -161,8 +161,8 @@ rails db:migrate
 # ②組み込みサーバーとUnixSocketを使った動作確認
 - config/puma.rbを開く  
 `vim config/puma.rb`  
-- port ENV.fetch("PORT") { 3000 }をコメントアウトする。両端に#をつけるとコメントアウトできる  
-`#port ENV.fetch("PORT") { 3000 }#`
+- port ENV.fetch("PORT") { 3000 }をコメントアウトする。行頭に#をつけるとコメントアウトできる  
+`#port ENV.fetch("PORT") { 3000 }`
 
 
 - railsを起動  
@@ -178,7 +178,7 @@ curl --unix-socket /home/ec2-user/raisetech-live8-sample-app/tmp/sockets/puma.so
 ![組み込みサーバー・Unixソケット動作確認2.png](lecture5re/組み込みサーバー・Unixソケット動作確認2.png)
 
 # ③nginx単体の動作確認
-- nginx インストー
+- nginx インストール
 `sudo amazon-linux-extras install nginx1`
 
 - 初期設定ファイルのバックアップを取る
@@ -236,12 +236,12 @@ server {
 - 権限付与 回帰オプション付けて
 `chmod -R 701 /home/ec2-user`
 
-- nginxのファイルのも権限を与える
+- nginxのファイルにも権限を与える
 ```
 chmod 701 /etc/nginx/nginx.conf
 sudo chmod 701 /etc/nginx/conf.d/raisetech-live8-sample-app.conf
 ```
-- Nginx起動
+- nginx起動
 `sudo systemctl start nginx`
 
 - pumaをsystemctlで起動させる
@@ -345,7 +345,7 @@ server_nameを`raisetech-alb-206070586.ap-northeast-1.elb.amazonaws.com`に変�
 
 - ALBのDNSをブラウザにコピペして動作確認
 
-![ALB追加動作確認.png](ALB追加動作確認.png)
+![ALB追加動作確認2.png](lecture5re2/ALB追加動作確認2.png)
 
 # ⑥S3を追加して動作確認
 - S3作成  
@@ -374,7 +374,7 @@ bucket: raisetech-mys3
 ![S3追加動作確認2.png](lecture5re/S3追加動作確認2.png)
 
 # 構成図
-![構成図.png](lecture5re/構成図.png)
+![構成図2.png](lecture5re2/構成図2.png)
 
 # 感想
 - この課題ができるまで、紆余曲折の連続だった。ぶっちゃけすごくしんどかった。  
