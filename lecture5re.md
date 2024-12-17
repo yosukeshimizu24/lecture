@@ -1,5 +1,4 @@
 # 目次
-- 第５回課題が完成したのでご確認のほどよろしくお願いします。
 1. 組み込みサーバーのみでの動作確認
 1. 組み込みサーバーとUnixSocketを使った動作確認
 1. Nginx単体動作確認
@@ -26,9 +25,10 @@ client_loopしないように設定<br><S-Del>`sudo vim /etc/ssh/sshd_config`
 sshdの再読み込み<br>`sudo systemctl reload sshd.service`
 
 
-- rubyインストール<br>railsの起動に必要なパッケージをインストール<br>`sudo yum install -y gcc-c++ glibc-headers openssl-devel readline libyaml-devel readline-devel zlib zlib-devel libffi-devel libxml2 libxslt libxml2-devel libxslt-devel sqlite-devel`
+## rubyインストール  
+railsの起動に必要なパッケージをインストール<br>`sudo yum install -y gcc-c++ glibc-headers openssl-devel readline libyaml-devel readline-devel zlib zlib-devel libffi-devel libxml2 libxslt libxml2-devel libxslt-devel sqlite-devel`
 
-rbenvのインストール<br>`git clone https://github.com/sstephenson/rbenv.git ~/.rbenv`  
+- rbenvのインストール<br>`git clone https://github.com/sstephenson/rbenv.git ~/.rbenv`  
 上記でだけでは、コマンド実行できないのでPATHを設定
 ```
 echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
@@ -36,21 +36,19 @@ echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
-ruby-buildのインストール<br>`git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build`  
+- ruby-buildのインストール<br>`git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build`  
 コマンドを使えるようにする  
 `rbenv rehash`
 
-rubyインストール  
+- rubyインストール  
 `rbenv install -v 3.2.3`  
 使用するRubyのバージョンを指定    
 `rbenv global 3.2.3`
 
-
-- bundlerインストール  
+## bundlerインストール  
 `gem install bundler -v 2.3.14`
 
-
-- Node.jsが必要なのでnvmをインストール  
+## Node.jsが必要なのでnvmをインストール  
 ```
 git clone https://github.com/creationix/nvm.git ~/.nvm
 source ~/.nvm/nvm.sh`
@@ -65,18 +63,17 @@ if [ -f ~/.nvm/nvm.sh ]; then
 fi
 ```
 
-
-- node インストール  
+## node インストール  
 `nvm install v17.9.1`
 
 
-- yarnインストール  
+## yarnインストール  
 `npm install --global yarn`  
 yarnバージョン変更  
 `yarn set version 1.22.19`
 
 
-- MySQLインストール  
+## MySQLインストール  
 下記コマンドを実行してインスタンス作成初期からインストールされているMariaDB用パッケージを削除  
 `sudo yum remove -y mariadb-*`  
 下記コマンドを実行してMySQLのリポジトリをyumに追加  
@@ -121,23 +118,23 @@ host: "RDSのエンドポイント"
 を入力
 
 
-- 環境構築  
+## 環境構築  
 `bin/setup`
 
-組み込みサーバーの起動  
+## 組み込みサーバーの起動  
 `bin/dev`
 
 error Command failed with exit code 127.と表示されたため  
 `yarn install`
 
 
-- 動作確認  
+## 動作確認  
 `http://EC2のパブリック IPv4 アドレス:3000`  
 動作しなかったら、EC2のインバウンド・アウトバウンド確認
 
 ![組み込みサーバーのみ動作確認.png](lecture5re/組み込みサーバーのみ動作確認.png)
 
-- 画像を表示させる  
+## 画像を表示させる  
 image magick インストール
 ```
 sudo yum install ImageMagick
@@ -261,7 +258,7 @@ sudo systemctl daemon-reload
 ![組み込みサーバー・Unixソケット・Nginx動作確認.png](lecture5re/組み込みサーバー・Unixソケット・Nginx動作確認.png)
 
 # ⑤ALB追加したうえでの動作確認
-- ターゲットグループ作成
+## ターゲットグループ作成
 1. ターゲットタイプの選択
 `インスタンス`
 1. ターゲットグループ名　
@@ -280,7 +277,7 @@ sudo systemctl daemon-reload
 `/`
 1. ターゲットのEC2を選択して追加する
 
-- ロードバランサー作成
+## ロードバランサー作成
 1. ロードバランサータイプ　
 `Application Load Balancerを選択`
 1. ロードバランサー名　
@@ -300,7 +297,7 @@ sudo systemctl daemon-reload
 `http:80 作成したターゲットグループを選択`
 
 
-- server_nameを変更する
+## server_nameを変更する
 ```
 sudo vi /etc/nginx/conf.d/raisetech-live8-sample-app.conf
 server_nameをALBのDNS名に変更
@@ -324,7 +321,7 @@ http {
     keepalive_timeout  65;
 
 この記述をこの下辺りに入れておけばOK
-    server_names_hash_bucket_size 64;
+    server_names_hash_bucket_size 128;
 
 ・・・
 }
