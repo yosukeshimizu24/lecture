@@ -1,6 +1,23 @@
 # 第3回課題報告
 
 - サンプルアプリケーションのデプロイ
+![サンプルアプリケーションのデプロイ.png](lecture3/サンプルアプリケーションのデプロイ.png)
+
+- APサーバーについて（名前とバージョン）
+![APサーバーと名前とバージョン.png](lecture3/APサーバーの名前とver.png)
+
+- APサーバーについて（APサーバー終了時のアクセス状況）
+![アクセス.png](lecture3/アクセス.png)
+
+- DBサーバーについて（DBサーバーの名前とCloud9でのバージョン）
+![mysql名称.png](lecture3/mysql名称.png)
+![version.png](lecture3/version.png)
+
+- DBサーバーについて（DBサーバー終了時のアクセス状況）
+![DBアクセス.png](lecture3/DBアクセス.png)
+
+- DBサーバーについて（Railsの構成管理ツールの名称）
+![bundler.png](lecture3/bundler.png)
 ![サンプルアプリケーションのデプロイ.png](lecture3.png/サンプルアプリケーションのデプロイ.png)
 
 - APサーバーについて（名前とバージョン）

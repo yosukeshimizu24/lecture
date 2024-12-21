@@ -1,6 +1,19 @@
 # lecture4課題報告
 
 - VPC作成
+![VPC作成.png](lecture4/VPC作成.png)
+
+- EC2構築
+![EC2構築.png](lecture4/EC2構築.png)
+![EC2セキュリティ.png](lecture4/EC2セキュリティ.png)
+
+- RDS構築
+![RDS構築.png](lecture4/RDS構築.png)
+![RDSセキュリティ・インバウンド.png](lecture4/RDSセキュリティ・インバウンド.png)
+![RDSセキュリティ・アウトバウンド.png](lecture4/RDSセキュリティ・アウトバウンド.png)
+
+- EC2からRDSへ接続
+![EC2からRDSへ接続.png](lecture4/EC2からRDSへ接続.png)
 ![VPC作成.png](lecture4.png/VPC作成.png)
 
 - EC2構築
