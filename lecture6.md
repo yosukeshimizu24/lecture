@@ -23,3 +23,10 @@
 ![Alert_OK.png](lecture6.png/Alert_OK.png)
 ![Unhealthy_Alert_OK-mail.png](lecture6.png/Unhealthy_Alert_OK-mail.png)
 
+## AWS利用料
+見積作成
+[見積URL](https://calculator.aws/#/estimate?id=017643382d17746697028bbb54707d7c5d39b0f2)
+
+先月の請求情報
+![11月cost](lecture6.png/11月cost)
+
