@@ -34,17 +34,17 @@
 6. インスタンス作成でEC2作成
 
 ## **EC2セキュリティ**
-![EC2セキュリティ.png](lecture4re.png/EC2セキュリティ.png)
+![EC2セキュリティ.png](lecture4re/EC2セキュリティ.png)
 
 ## **EC2接続**
-![EC2接続.png](lecture4re.png/EC2接続.png)
+![EC2接続.png](lecture4re/EC2接続.png)
 - 手順
 1. PowerSell起動
 1. sshで接続
   「ssh -i "作成したキーペアのパス" ec2-user@作成したEC2のパブリックIPv4アドレス」
 
 ## **RDS作成**
-![RDS.png](lecture4re.png/RDS.png)
+![RDS.png](lecture4re/RDS.png)
 - 手順
 1. サブネットグループを作成
 1. データベース作成方法を選択「標準作成」
@@ -68,10 +68,10 @@
 9. データベースの作成でRDS作成する
 
 ## **RDSセキュリティ**
-![RDSセキュリティ.png](lecture4re.png/RDSセキュリティ.png)
+![RDSセキュリティ.png](lecture4re/RDSセキュリティ.png)
 
 ## **RDS接続**
-![RDS接続.png](lecture4re.png/RDS接続.png)
+![RDS接続.png](lecture4re/RDS接続.png)
 - 手順
 1. EC2を接続してMySQLをインストールする
  - sshを使用してEC2に接続する

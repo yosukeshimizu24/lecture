@@ -12,21 +12,21 @@
 - イベント時間  
 - ユーザー名  
 - イベントソース  
-![StopInstances.png](lecture6.png/StopInstances.png)
+![StopInstances.png](lecture6/StopInstances.png)
 
 ## CloudWatchでALBアラーム設定
 **Alert**
-![Alert.png](lecture6.png/Alert.png)
-![Unhealthy_Alert-mail.png](lecture6.png/Unhealthy_Alert-mail.png)
+![Alert.png](lecture6/Alert.png)
+![Unhealthy_Alert-mail.png](lecture6/Unhealthy_Alert-mail.png)
 
 **OK**
-![Alert_OK.png](lecture6.png/Alert_OK.png)
-![Unhealthy_Alert_OK-mail.png](lecture6.png/Unhealthy_Alert_OK-mail.png)
+![Alert_OK.png](lecture6/Alert_OK.png)
+![Unhealthy_Alert_OK-mail.png](lecture6/Unhealthy_Alert_OK-mail.png)
 
 ## AWS利用料
-見積作成
+見積作成  
 [見積URL](https://calculator.aws/#/estimate?id=017643382d17746697028bbb54707d7c5d39b0f2)
 
 先月の請求情報
-![11月cost](lecture6.png/11月cost)
+![11月cost.png](lecture6/11月cost.png)
 
