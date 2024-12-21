@@ -25,7 +25,7 @@
 
 ## AWS利用料
 見積作成  
-[見積URL](https://calculator.aws/#/estimate?id=017643382d17746697028bbb54707d7c5d39b0f2)
+[見積URL](https://calculator.aws/#/estimate?id=15b41106bbf8948663b09b99cb02dd6ab62822d0)
 
 先月の請求情報
 ![11月cost.png](lecture6/11月cost.png)
