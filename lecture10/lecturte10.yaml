@@ -1,0 +1,421 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: "lecture10_template"
+
+# 
+# ------------------------------------------------------------#
+# Input Parameters
+# ------------------------------------------------------------# 
+Parameters:
+  namebase:
+    Description: this is base name.
+    Type: String
+    Default: lecture10
+
+  tagkey: 
+    Type: String
+    Default: raisetech
+
+  VpcCIDR:
+    Description: VpcCIDR
+    Type: String
+    Default: "10.0.0.0/16"
+
+  PublicSubnet1CIDR:
+    Description: PublicSubnet1CIDR
+    Type: String
+    Default: "10.0.1.0/24"
+
+  PublicSubnet2CIDR:
+    Description: PublicSubnet2CIDR
+    Type: String
+    Default: "10.0.3.0/24"
+
+  PrivateSubnet1CIDR:
+    Description: PrivateSubnet1CIDR
+    Type: String
+    Default: "10.0.2.0/24"
+
+  PrivateSubnet2CIDR:
+    Description: PrivateSubnet2CIDR
+    Type: String
+    Default: "10.0.4.0/24"
+
+  DBMasterUserName:
+    Type: String
+    NoEcho: true
+    MinLength: 1
+    MaxLength: 16
+    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
+    ConstraintDescription: "must begin with a letter and contain only alphanumeric characters."
+  
+  DBPassword:
+    NoEcho: true
+    Type: String
+    MinLength: 8
+    MaxLength: 41
+    AllowedPattern: "[a-zA-Z0-9]*"
+    ConstraintDescription: "must contain only alphanumeric characters."
+
+Resources:
+# ------------------------------------------------------------#
+#  VPC create
+# ------------------------------------------------------------#
+# VPC Create
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VpcCIDR
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub "${namebase}-vpc"
+
+# InternetGateway Create
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub "${namebase}-igw"
+
+# IGW Attach
+  InternetGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref InternetGateway
+      VpcId: !Ref VPC
+
+# ------------------------------------------------------------#
+#  Subnet create
+# ------------------------------------------------------------#  
+# Public SubnetA Create
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: ap-northeast-1a
+      CidrBlock: !Ref PublicSubnet1CIDR
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub ${namebase}-PublicSubnet (AZa)
+
+# Public SubnetC Create
+  PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: ap-northeast-1c
+      CidrBlock: !Ref PublicSubnet2CIDR
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub ${namebase}-PublicSubnet (AZc)
+
+# Private SubnetA Create
+  PrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: ap-northeast-1a
+      CidrBlock: !Ref PrivateSubnet1CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub ${namebase}-PrivateSubnet (AZa)
+
+# Private SubnetC Create
+  PrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: ap-northeast-1c
+      CidrBlock: !Ref PrivateSubnet2CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub ${namebase}-PrivateSubnet (AZc)
+
+# ------------------------------------------------------------#
+#  RouteTable create
+# ------------------------------------------------------------#
+# Public RouteTable Create
+  routepublicsubnet:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub ${namebase}-routetable-public
+  
+  routeprivatesubnet:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub ${namebase}-routetable-private
+
+  routePublic:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref routepublicsubnet
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+# ------------------------------------------------------------#
+#  RouteTable Associate
+# ------------------------------------------------------------#
+  routeTableAssocPublic01:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet1
+      RouteTableId: !Ref routepublicsubnet
+
+  routeTableAssocPublic02:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet2
+      RouteTableId: !Ref routepublicsubnet
+
+  routeTableAssocprivate01:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnet1
+      RouteTableId: !Ref routeprivatesubnet
+
+  routeTableAssocprivate02:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnet2
+      RouteTableId: !Ref routeprivatesubnet
+
+# application
+# ------------------------------------------------------------#
+#  EC2 SecurityGroup
+# ------------------------------------------------------------#
+  EC2SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: lecture10-EC2SG
+      GroupDescription: lecture10-EC2SG
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          SourceSecurityGroupId: !Ref ALBSecurityGroup
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+        - IpProtocol: '-1'  # 全てのアウトバウンド通信を許可
+          CidrIp: '0.0.0.0/0'
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub ${namebase}-ec2SecurityGroup
+
+# ------------------------------------------------------------#
+#  IAM
+# ------------------------------------------------------------#
+  IAMRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement: 
+          - Effect: Allow
+            Principal: 
+              Service: 
+                - ec2.amazonaws.com
+            Action: 
+              - 'sts:AssumeRole'
+      ManagedPolicyArns: 
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+      RoleName: lecture10-role
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub ${namebase}-IAMrole
+
+  IAMInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      InstanceProfileName: lecture10-instanceprofile
+      Roles: 
+        - !Ref IAMRole
+
+# ------------------------------------------------------------#
+#  EC2 Instance
+# ------------------------------------------------------------#
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      KeyName: RaiseTech
+      ImageId: ami-0190c0073f61fb37a
+      InstanceType: t2.small
+      Monitoring: false
+      IamInstanceProfile: !Ref IAMInstanceProfile
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "true"
+          DeviceIndex: "0"
+          SubnetId: !Ref PublicSubnet1
+          GroupSet:
+          - !Ref EC2SecurityGroup
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub ${namebase}-EC2Instance
+
+# ------------------------------------------------------------#
+#  RDS SecurityGroup
+# ------------------------------------------------------------#
+  RDSSecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      VpcId: !Ref VPC
+      GroupName: rds-sg
+      GroupDescription: lecture10-rds-sg
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub ${namebase}-rds-sg
+# Rule
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          SourceSecurityGroupId: !Ref EC2SecurityGroup
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          SourceSecurityGroupId: !Ref EC2SecurityGroup
+
+# ------------------------------------------------------------#
+#  RDS SubnetGroup
+# ------------------------------------------------------------#
+  RDSSubnetGroup: 
+    Type: "AWS::RDS::DBSubnetGroup"
+    Properties: 
+      DBSubnetGroupName: rds-SubnetGroup
+      DBSubnetGroupDescription: lecture10-subnetGP
+      SubnetIds: 
+        - !Ref PrivateSubnet1
+        - !Ref PrivateSubnet2
+
+# ------------------------------------------------------------#
+#  RDS create
+# ------------------------------------------------------------#
+  RDSInstance: 
+    Type: "AWS::RDS::DBInstance"
+    Properties: 
+      DBInstanceIdentifier: lectutre10-rds
+      Engine: MySQL
+      EngineVersion: "8.0.35"
+      DBInstanceClass: db.t3.micro
+      AllocatedStorage: "20"
+      StorageType: gp2
+      MasterUsername: !Ref DBMasterUserName
+      MasterUserPassword: !Ref DBPassword
+      DBSubnetGroupName: !Ref RDSSubnetGroup
+      AvailabilityZone: ap-northeast-1a
+      PubliclyAccessible: false
+      MultiAZ: false
+      AutoMinorVersionUpgrade: false
+      VPCSecurityGroups:
+        - !Ref RDSSecurityGroup
+      CopyTagsToSnapshot: true
+      BackupRetentionPeriod: 0
+      Tags: 
+        - Key: !Ref tagkey
+          Value: !Sub ${namebase}-RDS
+      
+# ------------------------------------------------------------#
+#  ALB security
+# ------------------------------------------------------------#
+  ALBSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupName: lecture10-alb-security
+      GroupDescription: lecture10-alb-security
+      VpcId: !Ref VPC  # ALBを配置するVPCのID
+      SecurityGroupIngress:
+        - IpProtocol: "tcp"
+          FromPort: "80"
+          ToPort: "80"
+          CidrIp: "0.0.0.0/0"  # HTTPアクセスをインターネットから許可（ポート80）
+      SecurityGroupEgress:
+        - IpProtocol: "-1"
+          CidrIp: "0.0.0.0/0"  # すべてのトラフィックを許可（アウトバウンド）
+
+# ------------------------------------------------------------#
+#  ALB TargetGroup
+# ------------------------------------------------------------#
+  ALBTargetGroup: 
+    Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
+    Properties:
+      Name: lecture10-albtg
+      VpcId: !Ref VPC
+      Protocol: HTTP
+      Port: 80
+      TargetType: instance
+      HealthCheckPath: "/"
+      HealthyThresholdCount: 5
+      UnhealthyThresholdCount: 2
+      HealthCheckTimeoutSeconds: 5
+      HealthCheckIntervalSeconds: 30
+      Matcher:
+        HttpCode: 200
+      Targets:
+        - Id: !Ref EC2Instance
+          Port: 80
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub ${namebase}-albtg
+
+# ------------------------------------------------------------#
+#  ALB create
+# ------------------------------------------------------------#
+  ALB:
+    Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
+    Properties:
+      Name: "lecture10-alb"
+      Subnets:
+        - !Ref PublicSubnet1 # ALBが配置されるサブネットID
+        - !Ref PublicSubnet2
+      SecurityGroups:
+        - !Ref ALBSecurityGroup  # セキュリティグループID
+      Scheme: internet-facing  # インターネット経由のトラフィックを受ける場合は "internet-facing"
+      LoadBalancerAttributes:
+        - Key: idle_timeout.timeout_seconds
+          Value: '60'  # アイドルタイムアウト（秒）
+      Type: application  # ALBの場合は"application"
+      IpAddressType: ipv4  # IPアドレスのタイプ（ipv6も設定可能）
+
+# ------------------------------------------------------------#
+#  ALB listener
+# ------------------------------------------------------------#
+  ALBListener:
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref ALBTargetGroup
+      LoadBalancerArn: !Ref ALB
+      Port: 80
+      Protocol: HTTP
+
+# ------------------------------------------------------------#
+#  S3 create
+# ------------------------------------------------------------#
+  S3:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      BucketName: lecture10-mybucket
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub ${namebase}-s3
