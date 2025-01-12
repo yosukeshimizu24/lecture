@@ -6,7 +6,7 @@
  1. 感想
 
 ## テンプレート
-[lecture10.yaml](lecture10/lecture10.yaml)
+[lecture10-テンプレート](lecture10/lecture10.yaml)
 
 ## 環境が自動で構築されているかそれぞれ確認
 
