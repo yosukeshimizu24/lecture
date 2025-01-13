@@ -6,8 +6,8 @@
  1. 感想
 
 ## テンプレート
-[network template](lecture10/lecture10_lecture10.yaml)  
-[application template](lecture10/application_lecture10.yaml)
+[network template](lecture10/lecture10_network.yaml)   
+[application template](lecture10/lecture10_application.yaml)
 
 ## 環境が自動で構築されているかそれぞれ確認
 
