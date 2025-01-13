@@ -1,0 +1,215 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: "lecture10_template"
+
+# ------------------------------------------------------------#
+# Input Parameters
+# ------------------------------------------------------------# 
+Parameters:
+  namebase:
+    Description: this is base name.
+    Type: String
+    Default: lecture10
+
+  tagkey: 
+    Type: String
+    Default: raisetech
+
+  VpcCIDR:
+    Description: VpcCIDR
+    Type: String
+    Default: "10.0.0.0/16"
+
+  PublicSubnet1CIDR:
+    Description: PublicSubnet1CIDR
+    Type: String
+    Default: "10.0.1.0/24"
+
+  PublicSubnet2CIDR:
+    Description: PublicSubnet2CIDR
+    Type: String
+    Default: "10.0.3.0/24"
+
+  PrivateSubnet1CIDR:
+    Description: PrivateSubnet1CIDR
+    Type: String
+    Default: "10.0.2.0/24"
+
+  PrivateSubnet2CIDR:
+    Description: PrivateSubnet2CIDR
+    Type: String
+    Default: "10.0.4.0/24"
+
+Resources:
+# ------------------------------------------------------------#
+#  VPC create
+# ------------------------------------------------------------#
+# VPC Create
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VpcCIDR
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub "${namebase}-vpc"
+
+# InternetGateway Create
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub "${namebase}-igw"
+
+# IGW Attach
+  InternetGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref InternetGateway
+      VpcId: !Ref VPC
+
+# ------------------------------------------------------------#
+#  Subnet create
+# ------------------------------------------------------------#  
+# Public SubnetA Create
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: ap-northeast-1a
+      CidrBlock: !Ref PublicSubnet1CIDR
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub ${namebase}-PublicSubnet (AZa)
+
+# Public SubnetC Create
+  PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: ap-northeast-1c
+      CidrBlock: !Ref PublicSubnet2CIDR
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub ${namebase}-PublicSubnet (AZc)
+
+# Private SubnetA Create
+  PrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: ap-northeast-1a
+      CidrBlock: !Ref PrivateSubnet1CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub ${namebase}-PrivateSubnet (AZa)
+
+# Private SubnetC Create
+  PrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: ap-northeast-1c
+      CidrBlock: !Ref PrivateSubnet2CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub ${namebase}-PrivateSubnet (AZc)
+
+# ------------------------------------------------------------#
+#  RouteTable create
+# ------------------------------------------------------------#
+# Public RouteTable Create
+  routepublicsubnet:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub ${namebase}-routetable-public
+  
+  routeprivatesubnet:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: !Ref tagkey
+          Value: !Sub ${namebase}-routetable-private
+
+  routePublic:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref routepublicsubnet
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+# ------------------------------------------------------------#
+#  RouteTable Associate
+# ------------------------------------------------------------#
+  routeTableAssocPublic01:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet1
+      RouteTableId: !Ref routepublicsubnet
+
+  routeTableAssocPublic02:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet2
+      RouteTableId: !Ref routepublicsubnet
+
+  routeTableAssocprivate01:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnet1
+      RouteTableId: !Ref routeprivatesubnet
+
+  routeTableAssocprivate02:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnet2
+      RouteTableId: !Ref routeprivatesubnet
+
+# ------------------------------------------------------------#
+#  output Parameters
+# ------------------------------------------------------------#
+Outputs:
+  tagkeyID:
+    Description: tagkeyID
+    Value: !Ref tagkey
+    Export:
+      Name: tagkeyID
+  
+  VPCID:
+    Description: vpcID
+    Value: !Ref VPC
+    Export:
+      Name: VPCID
+  
+  PublicSubnet1ID:
+    Description: PublicSubnet1ID
+    Value: !Ref PublicSubnet1
+    Export:
+      Name: PublicSubnet1ID
+  
+  PublicSubnet2ID:
+    Description: PublicSubnet2ID
+    Value: !Ref PublicSubnet2
+    Export:
+      Name: PublicSubnet2ID
+
+  PrivateSubnet1ID:
+    Description: PrivateSubnet1ID
+    Value: !Ref PrivateSubnet1
+    Export:
+      Name: PrivateSubnet1ID
+  
+  PrivateSubnet2ID:
+    Description: PrivateSubnet2ID
+    Value: !Ref PrivateSubnet2
+    Export:
+      Name: PrivateSubnet2ID
